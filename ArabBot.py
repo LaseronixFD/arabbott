@@ -1,28 +1,33 @@
-#صغصفصف
-#العربية
-#Шустрик)
+import discord
+from discord.ext import commands
 
-import discord as dc
-from translate import Translator
+TOKEN = "token"
 
-class ArabBot(dc.Client):
-    async def on_message(self, message):
-        m = '{0.content}'.format(message)
-        if m[0] == '&':
-            b_m = ''
-            for i in range(len(m)-1):
-                b_m += m[i+1]
-            tr = Translator(from_lang='Russian', to_lang='Arabic')
-            b_answer = tr.translate(b_m)
-            print(b_answer)
-            await message.channel.send(b_answer)
-        if m[0] == '%':
-            b_m = ''
-            for i in range(len(m)-1):
-                b_m += m[i+1]
-            tr = Translator(from_lang='Arabic', to_lang='Russian')
-            b_answer = tr.translate(b_m)
-            print(b_answer)
-            await message.channel.send(b_answer)
+bot = commands.Bot(command_prefix=('+'))
+bot.remove_command( 'help' )
 
-ArabBot().run('ODMxMTQxNTU5OTczMDUyNDM2.YHQ65Q.P3UDdRJCMDrlC2JX1A7C3Z5SRDo')
+@bot.event
+async def on_ready():
+    print("Я запущен!")
+
+@bot.command()
+async def Hi(ctx):
+    await ctx.send('Hi')
+
+@bot.command()
+async def test1(ctx):
+    embed = discord.Embed(
+        title="Привет всем!",
+    )
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def lolzsait(ctx):
+    embed = discord.Embed(
+        title="Тык для перехода",
+        description="Ссылка для перехода на lolz",
+        url='https://lolz.guru',
+    )
+    await ctx.send(embed=embed)
+
+bot.run('ODMxMTQxNTU5OTczMDUyNDM2.YHQ65Q.P3UDdRJCMDrlC2JX1A7C3Z5SRDo')
